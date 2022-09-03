@@ -43,8 +43,8 @@ public class TechJobs {
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
-
-                    System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
+                    System.out.println();
+                    System.out.println("*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
                     for (String item : results) {
@@ -58,7 +58,8 @@ public class TechJobs {
                 String searchField = getUserSelection("Search by:", columnChoices);
 
                 // What is their search term?
-                System.out.println("\nSearch term:");
+                System.out.println();
+                System.out.println("Search term:");
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
@@ -86,8 +87,8 @@ public class TechJobs {
         }
 
         do {
-
-            System.out.println("\n" + menuHeader);
+            System.out.println();
+            System.out.println(menuHeader);
 
             // Print available choices
             for (int j = 0; j < choiceKeys.length; j++) {
@@ -123,7 +124,8 @@ public class TechJobs {
             System.out.print("No Results");
         } else {
             for (int i = 0; i < someJobs.size(); i++) {
-                System.out.println("\n*****");
+                System.out.println();
+                System.out.println("*****");
                 for (Map.Entry<String, String> job : someJobs.get(i).entrySet()) {
                     System.out.println(job.getKey() + ": " + job.getValue());
                 }
