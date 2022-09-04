@@ -5,10 +5,8 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -53,8 +51,11 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        // Bonus mission; normal version returns allJobs
-        return new ArrayList<>(allJobs);
+        // Bonus mission; Makes a copy of ArrayList<>(allJobs) and prints the copy to protect the original document
+        new ArrayList<>(allJobs);
+        ArrayList<HashMap<String, String>> allJobsCopy = new ArrayList<>(List.copyOf(allJobs));
+
+        return new ArrayList<>(allJobsCopy);
     }
 
     /**
@@ -77,9 +78,9 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -98,23 +99,21 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-//        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-//
-//        for (HashMap<String, String> row : allJobs) {
-//            String aValue = row.get(value);
-//
-//            if (aValue.contains(value)) {
-//                jobs.add(row);
-//            }
-//        }
-//
-//        return jobs;
-//    }
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
+        for (int i = 0; i < allJobs.size(); i++) {
+            for (Map.Entry<String,String> job : allJobs.get(i).entrySet()) {
+                String aValue = job.getValue();
+                if (aValue.toLowerCase().contains(value.toLowerCase())) {
+                    if (!jobs.contains(allJobs.get(i))) {
+                        jobs.add(allJobs.get(i));
+                    }
+                }
+            }
+        }
+        return jobs;
+    }
 
-    // TODO - implement this method
-        return null;
-}
 
     /**
      * Read in data from a CSV file and store it in a list
